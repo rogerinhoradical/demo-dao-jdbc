@@ -10,7 +10,11 @@ public class Program {
 		
 		SellerDao sellerDao = DaoFactory.createSellerDao();
 		
-		Seller seller = sellerDao.findById(3);
+		System.out.println("=======TEST 1: seller findById=======");
+		java.util.Scanner ler = new java.util.Scanner(System.in);
+		Seller seller = sellerDao.findById(ler.nextInt());
+		
+		
 		
 		System.out.println(seller);
 		
