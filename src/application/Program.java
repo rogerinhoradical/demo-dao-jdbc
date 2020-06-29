@@ -15,7 +15,7 @@ public class Program {
 		
 		System.out.println("=======TEST 1: seller findById=======");
 		java.util.Scanner ler = new java.util.Scanner(System.in);
-		Seller seller1 = sellerDao.findById(1);
+		Seller seller1 = sellerDao.findById(3);
 		System.out.println(seller1);
 		
 		System.out.println("\n=======TEST 2: seller findByDepartment=======");

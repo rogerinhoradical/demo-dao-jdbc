@@ -82,22 +82,8 @@ public class SellerDaoJDBC implements SellerDao{
 					+"ORDER BY Name");
 			
 			rs = st.executeQuery();
-			List<Seller> obj = new ArrayList<>();
+			List<Seller> obj = findSemRepeticao(rs, st);
 			
-			Map<Integer, Department> map = new HashMap<>();
-			while(rs.next()) {
-				
-				Department dep = map.get(rs.getInt("DepartmentId"));
-				
-				if(dep == null) {
-					dep = instanciateDepartment(rs);
-					map.put(rs.getInt("DepartmentId"), dep);
-				}
-				
-				Seller seller = instanciateSeller(rs, dep);
-				obj.add(seller);
-				
-			}
 			return obj;
 			
 		}catch(SQLException e) {
@@ -124,24 +110,8 @@ public class SellerDaoJDBC implements SellerDao{
 			
 			st.setInt(1, department.getId());
 			
-			rs = st.executeQuery();
+			List<Seller> obj = findSemRepeticao(rs, st);
 			
-			List<Seller> obj = new ArrayList<>();
-			
-			Map<Integer, Department> map = new HashMap<>();
-			while(rs.next()) {
-				
-				Department dep = map.get(rs.getInt("DepartmentId"));
-				
-				if(dep == null) {
-					dep = instanciateDepartment(rs);
-					map.put(rs.getInt("DepartmentId"), dep);
-				}
-				
-				Seller seller = instanciateSeller(rs, dep);
-				obj.add(seller);
-				
-			}
 			return obj;
 			
 		}catch(SQLException e) {
@@ -168,6 +138,27 @@ public class SellerDaoJDBC implements SellerDao{
 		obj.setBaseSalary(rs.getDouble("BaseSalary"));
 		obj.setBirthDate(rs.getDate("BirthDate"));
 		obj.setDepartment(dep);
+		return obj;
+	}
+	
+	public List<Seller> findSemRepeticao(ResultSet rs, PreparedStatement st) throws SQLException{
+		rs = st.executeQuery();
+		List<Seller> obj = new ArrayList<>();
+		
+		Map<Integer, Department> map = new HashMap<>();
+		while(rs.next()) {
+			
+			Department dep = map.get(rs.getInt("DepartmentId"));
+			
+			if(dep == null) {
+				dep = instanciateDepartment(rs);
+				map.put(rs.getInt("DepartmentId"), dep);
+			}
+			
+			Seller seller = instanciateSeller(rs, dep);
+			obj.add(seller);
+			
+		}
 		return obj;
 	}
 }
